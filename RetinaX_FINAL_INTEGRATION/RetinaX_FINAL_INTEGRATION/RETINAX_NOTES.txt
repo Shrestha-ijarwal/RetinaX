@@ -1,0 +1,8 @@
+RetinaX is the renamed TRUST-DR frontend/integration.
+
+The MATLAB model filenames and project folder remain unchanged so you do not need to rename your trained .mat files.
+
+New visible preprocessing step:
+Upload → Quality/Safety Gateway → CLAHE Comparison → AI Analysis → XAI → Human Review → Report
+
+The safety gateway remains a fundus-domain heuristic, not a DR-vs-other-disease classifier.

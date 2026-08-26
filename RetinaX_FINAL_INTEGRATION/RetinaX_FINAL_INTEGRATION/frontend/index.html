@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RetinaX | AI-Assisted DR Screening</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark">T</div>
+        <div>
+          <div class="brand-name">RetinaX</div>
+          <div class="brand-sub">AI-assisted diabetic retinopathy screening</div>
+        </div>
+      </div>
+      <div class="top-status">
+        <span class="status-dot"></span>
+        <span>System ready</span>
+        <span class="rural-pill">RURAL INDIA</span>
+      </div>
+    </header>
+
+    <main>
+      <section id="landing" class="screen active-screen">
+        <div class="hero-grid">
+          <div class="hero-copy">
+            <div class="eyebrow">SAFE • EXPLAINABLE • HUMAN-IN-THE-LOOP</div>
+            <h1>Trust the image.<br><span>Verify the AI.</span><br>Protect the patient.</h1>
+            <p class="hero-text">
+              RetinaX is an AI-assisted screening workflow for diabetic retinopathy
+              designed around image quality, explainability, retinal evidence,
+              confidence-aware triage and human validation.
+            </p>
+            <button class="primary-btn" id="startBtn">
+              <span>Start screening</span><span class="arrow">→</span>
+            </button>
+
+            <div class="hero-meta">
+              <div><strong>01</strong><span>Image quality</span></div>
+              <div><strong>02</strong><span>AI assessment</span></div>
+              <div><strong>03</strong><span>Human review</span></div>
+            </div>
+          </div>
+
+          <div class="retina-visual">
+            <div class="retina-ring">
+              <div class="retina-core">
+                <div class="retina-placeholder">
+                  <span class="retina-icon">◉</span>
+                  <span>RETINAL AI</span>
+                  <small>screening ready</small>
+                </div>
+              </div>
+            </div>
+            <div class="floating-card card-quality">
+              <span class="mini-icon">✓</span>
+              <div><strong>Safety first</strong><small>Quality gate before AI</small></div>
+            </div>
+            <div class="floating-card card-xai">
+              <span class="mini-icon">✦</span>
+              <div><strong>Explainable</strong><small>Model-focused visual evidence</small></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="acquisition" class="screen">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">STEP 01 / IMAGE ACQUISITION</div>
+            <h2>Bring the fundus image into RetinaX.</h2>
+            <p>Select a patient fundus image to begin the screening workflow.</p>
+          </div>
+          <div class="step-count">01 <span>/ 07</span></div>
+        </div>
+
+        <div class="acquisition-grid">
+          <div class="upload-panel">
+            <div class="upload-zone" id="uploadZone">
+              <input type="file" id="imageInput" accept="image/*" hidden />
+              <div class="upload-icon">↑</div>
+              <h3>Upload fundus image</h3>
+              <p>PNG, JPG or JPEG</p>
+              <button class="secondary-btn" id="browseBtn">Choose image</button>
+              <div class="file-name" id="fileName">No image selected</div>
+            </div>
+            <button class="primary-btn full" id="analyzeBtn" disabled>
+              Analyze image <span class="arrow">→</span>
+            </button>
+          </div>
+
+          <div class="preview-panel">
+            <div class="panel-label">IMAGE PREVIEW</div>
+            <div class="image-preview" id="imagePreview">
+              <div class="preview-empty">
+                <span>◉</span>
+                <p>Your fundus image will appear here</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="quality" class="screen">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">STEP 02 / IMAGE QUALITY & INPUT SAFETY</div>
+            <h2>Checking whether the image is safe to analyze.</h2>
+            <p>Focus, illumination, retinal visibility and gradability are verified first.</p>
+          </div>
+          <div class="step-count">02 <span>/ 07</span></div>
+        </div>
+
+        <div class="gateway-layout">
+          <div class="scan-card">
+            <div class="scan-image" id="qualityImage"></div>
+            <div class="scan-line"></div>
+            <div class="scan-label"><span class="pulse"></span> ANALYZING INPUT</div>
+          </div>
+
+          <div class="quality-panel">
+            <div class="quality-status">
+              <div class="shield">✓</div>
+              <div><strong id="qualityState">IMAGE ACCEPTED</strong><span id="qualitySub">Gradable input</span></div>
+            </div>
+
+            <div class="metric-list">
+              <div class="metric"><span>Focus / sharpness</span><strong id="focusMetric">Checking...</strong></div>
+              <div class="metric"><span>Illumination</span><strong id="illumMetric">Checking...</strong></div>
+              <div class="metric"><span>Retinal visibility</span><strong id="visibilityMetric">Checking...</strong></div>
+              <div class="metric"><span>Gradability</span><strong id="gradabilityMetric">Checking...</strong></div>
+            </div>
+
+            <div class="gateway-result">
+              <span>✓</span>
+              <div>
+                <strong id="gatewayTitle">FUNDUS-DOMAIN GATEWAY</strong>
+                <small id="gatewaySub">Waiting for MATLAB safety checks</small>
+                <small id="gatewayScore" style="display:block;margin-top:6px">Fundus-likeness: —</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+      <section id="preprocess" class="screen">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">STEP 03 / PREPROCESSING</div>
+            <h2>Original fundus vs. CLAHE-enhanced image.</h2>
+            <p>RetinaX preserves the original image and uses CLAHE enhancement for preprocessing and prediction-stability checking.</p>
+          </div>
+          <div class="step-count">03 <span>/ 07</span></div>
+        </div>
+
+        <div class="xai-grid">
+          <div class="visual-card">
+            <div class="visual-title"><span>ORIGINAL FUNDUS</span><span class="tag">INPUT</span></div>
+            <div class="visual-image" id="preOriginal"></div>
+          </div>
+
+          <div class="visual-card">
+            <div class="visual-title"><span>CLAHE PREPROCESSED</span><span class="tag">ENHANCED</span></div>
+            <div class="visual-image" id="claheView"></div>
+          </div>
+        </div>
+
+        <div class="result-strip" style="margin-top:20px">
+          <div><span>Original prediction</span><strong id="origPred">—</strong></div>
+          <div><span>CLAHE prediction</span><strong id="clahePred">—</strong></div>
+          <div><span>Original confidence</span><strong id="origConf">—</strong></div>
+          <div><span>CLAHE confidence</span><strong id="claheConf">—</strong></div>
+        </div>
+
+        <div class="gateway-result" style="margin-top:20px">
+          <span>✓</span>
+          <div>
+            <strong id="preprocessStability">STABILITY CHECK PENDING</strong>
+            <small id="preprocessStabilityReason">Original and CLAHE predictions will be compared after analysis.</small>
+          </div>
+        </div>
+      </section>
+
+      <section id="analysis" class="screen">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">STEP 04 / AI ANALYSIS</div>
+            <h2>Multiple evidence streams, one screening workflow.</h2>
+            <p>DR severity, vessel structure and lesion evidence are shown as parallel outputs.</p>
+          </div>
+          <div class="step-count">04 <span>/ 07</span></div>
+        </div>
+
+        <div class="analysis-flow">
+          <div class="analysis-card">
+            <div class="analysis-number">01</div>
+            <div class="analysis-icon">◒</div>
+            <h3>Preprocessing</h3>
+            <p>CLAHE, normalization, denoising and resizing.</p>
+            <span class="analysis-state">COMPLETE</span>
+          </div>
+
+          <div class="analysis-card">
+            <div class="analysis-number">02</div>
+            <div class="analysis-icon">◎</div>
+            <h3>DR classification</h3>
+            <p>Five-level severity assessment.</p>
+            <span class="analysis-state" id="severityState">READY</span>
+          </div>
+
+          <div class="analysis-card">
+            <div class="analysis-number">03</div>
+            <div class="analysis-icon">╱╲</div>
+            <h3>Vessel analysis</h3>
+            <p>Retinal vessel segmentation and structural evidence.</p>
+            <span class="analysis-state">READY</span>
+          </div>
+
+          <div class="analysis-card">
+            <div class="analysis-number">04</div>
+            <div class="analysis-icon">✦</div>
+            <h3>Lesion evidence</h3>
+            <p>IDRiD-based lesion evidence where available.</p>
+            <span class="analysis-state">READY</span>
+          </div>
+        </div>
+
+        <div class="result-strip">
+          <div><span>DR Grade</span><strong id="resultGrade">Moderate</strong></div>
+          <div><span>Confidence</span><strong id="resultConfidence">97.95%</strong></div>
+          <div><span>Referable DR</span><strong id="resultReferable">YES</strong></div>
+          <div><span>Review status</span><strong id="resultReview">PRIORITY REVIEW</strong></div>
+        </div>
+      </section>
+
+      <section id="xai" class="screen">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">STEP 05 / EXPLAINABILITY & EVIDENCE</div>
+            <h2>See what the model is looking at.</h2>
+            <p>Grad-CAM is shown as model-focused visual evidence, not as proof of a lesion diagnosis.</p>
+          </div>
+          <div class="step-count">05 <span>/ 07</span></div>
+        </div>
+
+        <div class="xai-grid">
+          <div class="visual-card">
+            <div class="visual-title"><span>ORIGINAL FUNDUS</span><span class="tag">INPUT</span></div>
+            <div class="visual-image" id="originalXai"></div>
+          </div>
+
+          <div class="visual-card">
+            <div class="visual-title"><span>GRAD-CAM OVERLAY</span><span class="tag hot">MODEL EVIDENCE</span></div>
+            <div class="visual-image gradcam-demo" id="gradcamXai">
+              <div class="heat-blob blob-1"></div>
+              <div class="heat-blob blob-2"></div>
+              <div class="heat-blob blob-3"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="xai-grid" style="margin-top:25px">
+          <div class="visual-card">
+            <div class="visual-title"><span>VESSEL OVERLAY</span><span class="tag">DRIVE</span></div>
+            <div class="visual-image" id="vesselXai"></div>
+          </div>
+          <div class="visual-card">
+            <div class="visual-title"><span>LESION OVERLAY</span><span class="tag">IDRiD</span></div>
+            <div class="visual-image" id="lesionXai"></div>
+          </div>
+        </div>
+        <div class="visual-card" style="margin-top:25px">
+          <div class="visual-title"><span>COMBINED STRUCTURAL EVIDENCE</span><span class="tag">VESSELS + LESIONS</span></div>
+          <div class="visual-image" id="combinedXai"></div>
+        </div>
+
+        <div class="result-strip" style="margin-top:20px">
+          <div><span>Vessel area</span><strong id="vesselArea">—</strong></div>
+          <div><span>Total lesion area</span><strong id="lesionArea">—</strong></div>
+          <div><span>CLAHE stability</span><strong id="claheStability">—</strong></div>
+          <div><span>Prediction safety</span><strong id="predictionSafety">—</strong></div>
+        </div>
+
+        <div class="evidence-strip">
+          <div><span class="evidence-icon">✦</span><div><strong>Model attention</strong><small>Highlighted regions influenced the prediction.</small></div></div>
+          <div><span class="evidence-icon">◌</span><div><strong>Vessel evidence</strong><small>Structural retinal evidence supports review.</small></div></div>
+          <div><span class="evidence-icon">!</span><div><strong>Clinical validation</strong><small>Final interpretation remains with the clinician.</small></div></div>
+        </div>
+      </section>
+
+      <section id="review" class="screen">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">STEP 06 / HUMAN-IN-THE-LOOP</div>
+            <h2>AI assists. A human makes the final review decision.</h2>
+            <p>Referable, uncertain or safety-triggered cases can be escalated.</p>
+          </div>
+          <div class="step-count">06 <span>/ 07</span></div>
+        </div>
+
+        <div class="review-grid">
+          <div class="ai-result-card">
+            <div class="result-label">AI SCREENING RESULT</div>
+            <div class="big-grade" id="reviewGrade">Moderate</div>
+            <div class="confidence"><span>Model confidence</span><strong id="reviewConfidence">97.95%</strong></div>
+            <div class="referral-badge" id="reviewReferral">REFERABLE DR</div>
+          </div>
+
+          <div class="review-card">
+            <div class="review-icon">◉</div>
+            <h3>Priority human review</h3>
+            <p>Review the fundus image, Grad-CAM and retinal evidence before finalizing the case.</p>
+
+            <div class="review-actions">
+              <button class="primary-btn" id="acceptReview">Accept AI result</button>
+              <button class="outline-btn" id="overrideReview">Override / modify</button>
+              <button class="outline-btn" id="recaptureReview">Request recapture</button>
+            </div>
+
+            <div class="review-status" id="reviewStatus">Awaiting ophthalmologist review</div>
+          </div>
+        </div>
+      </section>
+
+      <section id="report" class="screen">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">STEP 07 / FINAL REPORT</div>
+            <h2>RetinaX screening report.</h2>
+            <p>A compact summary for the screening team and specialist referral workflow.</p>
+          </div>
+          <div class="step-count">07 <span>/ 07</span></div>
+        </div>
+
+        <div class="report-layout">
+          <div class="report-card">
+            <div class="report-header">
+              <div><strong>RetinaX</strong><span>AI-assisted DR screening</span></div>
+              <span class="report-ok">SCREENING COMPLETE</span>
+            </div>
+
+            <div class="report-grid">
+              <div><span>Image quality</span><strong id="finalQuality">GOOD</strong></div>
+              <div><span>DR grade</span><strong id="finalGrade">Moderate</strong></div>
+              <div><span>Confidence</span><strong id="finalConfidence">97.95%</strong></div>
+              <div><span>Screening status</span><strong id="finalReferral">REFERABLE DR</strong></div>
+              <div><span>Human review</span><strong id="finalReview">PENDING</strong></div>
+              <div><span>Safety gateway</span><strong>ACCEPTED</strong></div>
+            </div>
+
+            <div class="recommendation">
+              <span>RECOMMENDATION</span>
+              <strong id="finalRecommendation">Priority ophthalmologist evaluation recommended.</strong>
+            </div>
+
+            <div class="report-footer">
+              Screening support only. Final clinical diagnosis remains with the qualified clinician.
+            </div>
+          </div>
+
+          <div class="next-card">
+            <div class="next-icon">✓</div>
+            <h3>Case ready for referral</h3>
+            <p>Compact results can be shared with a district or specialist centre through a low-bandwidth workflow.</p>
+            <button class="primary-btn full" onclick="window.print()">Print / Save Report</button>
+            <button class="outline-btn full-alt" id="newCaseBtn">Start new screening</button>
+          </div>
+        </div>
+      </section>
+
+      <div class="navigation">
+        <button class="nav-btn" id="backBtn">← Back</button>
+        <div class="nav-dots" id="navDots"></div>
+        <button class="nav-btn" id="nextBtn">Continue →</button>
+      </div>
+    </main>
+
+    <footer>
+      RetinaX • AI-assisted diabetic retinopathy screening • Rural India
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

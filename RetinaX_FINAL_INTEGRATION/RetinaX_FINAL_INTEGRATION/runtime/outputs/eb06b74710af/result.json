@@ -1,0 +1,53 @@
+{
+  "quality_result": "ACCEPTABLE",
+  "quality_action": "Image quality acceptable for AI screening.",
+  "focus_score": 0.00035146963184408371,
+  "brightness_score": 0.35303804758634155,
+  "contrast_score": 0.21300758781693979,
+  "gateway_pass": true,
+  "gateway_score": 0.72153036834999473,
+  "gateway_reason": "Input passes available fundus-domain checks. This does not exclude other retinal diseases.",
+  "gateway_decision": "PASSED",
+  "original_file": "original.png",
+  "clahe_file": "clahe.png",
+  "dr_prediction": "No_DR",
+  "dr_confidence": 0.86985189255987416,
+  "dr_prediction_clahe": "No_DR",
+  "dr_confidence_clahe": 0.62098388989234221,
+  "clahe_stability": "STABLE",
+  "prediction_safety": "PASSED",
+  "prediction_safety_reason": "Original/CLAHE prediction is stable and confidence meets the safety threshold.",
+  "referral_result": "NON-REFERABLE DR",
+  "referral_action": "Routine screening follow-up recommended.",
+  "vessel_area_percent": 20.065403320476271,
+  "lesion_foreground_area_percent": 2.7257033608292804,
+  "lesion_names": [
+    "Background",
+    "MA",
+    "HE",
+    "EX",
+    "SE",
+    "OD"
+  ],
+  "lesion_counts": [
+    1.1879355E+7,
+    0,
+    0,
+    0,
+    1078,
+    331791
+  ],
+  "lesion_areas": [
+    97.274296639170714,
+    0,
+    0,
+    0,
+    0.00882722098775784,
+    2.7168761398415229
+  ],
+  "vessel_overlay_file": "vessel_overlay.png",
+  "lesion_overlay_file": "lesion_overlay.png",
+  "combined_overlay_file": "combined_overlay.png",
+  "gradcam_overlay_file": "gradcam_overlay.png",
+  "gradcam_heatmap_file": "gradcam_heatmap.png"
+}
